@@ -39,8 +39,8 @@ void check_op(char *tok, stack_t **stack, unsigned int ln)
 /**
  * main - runs the monty interpreter
  *
- * argc: int, number of arguments
- * argv: str, the arguments
+ * @argc: int, number of arguments
+ * @argv: str, the arguments
  *
  * Return: int, 0 if succeed, 1 if fail
  */

@@ -37,6 +37,21 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct globe_s - contains the global variables I want to have
+ *
+ * @file: a copy of the contents of the file
+ * @tok: contains a token created from the current line of the file
+ *
+ * Description: so I can have multiple global variables
+ * mwahahahahahaha
+ */
+typedef struct globe_s
+{
+	FILE file;
+	char *tok;
+} globe_t;
+
 
 void check_op(char *tok, stack_t **stack, unsigned int ln);
 void push(stack_t **stack, unsigned int line_number);
