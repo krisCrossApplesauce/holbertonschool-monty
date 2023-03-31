@@ -17,16 +17,11 @@ void check_op(char *tok, stack_t **stack, unsigned int ln)
 {
 	int i = 0;
 	instruction_t stuff[] = {
-		{ "push", _push },
-		{ "pall", _pall },
-		{ "pint", _pint },
-		{ "pop", _pop },
-		{ "swap", _swap },
-		{ "add", _add },
-		{ "nop", _nop }
+		{ "push", push },
+		{ "pall", pall }
 	};
 
-	while (i < 7)
+	while (i < 2)
 	{
 		if (*stuff[i].opcode == tok)
 		{ return (stuff[i].f(stack, ln)); }
@@ -75,7 +70,7 @@ int main(int argc, char **argv)
 		tok = strtok(line_buff, " \t\n");
 		free(line_buff);
 		line_buff = NULL;
-		check_op(&stack, line_num);
+		check_op(&tok, &stack, line_num);
 	}
 
 	free(line_buff);
