@@ -24,7 +24,7 @@ void push(stack_t **stack, unsigned int line_number)
 
 	glob->tok = strtok(NULL, " \t\n");
 
-	if (!glob->tok || !(n = atoi(tok)))
+	if (!glob->tok)
 	{
 		fprintf(stderr, "L%s: usage: push integer", line_number);
 		free(stack);
@@ -32,6 +32,8 @@ void push(stack_t **stack, unsigned int line_number)
 		fclose(glob->file);
 		return (EXIT_FAILURE);
 	}
+
+	n = atoi(glob->tok);
 
 	new->n = glob->tok;
 	new->prev = NULL;
