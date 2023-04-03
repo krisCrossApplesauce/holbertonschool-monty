@@ -1,7 +1,6 @@
 #include "monty.h"
 
-FILE *file = NULL;
-char *tok = NULL;
+globe_t glob;
 
 /**
  * check_op - runs the function that corresponds with the command
@@ -46,6 +45,8 @@ void check_op(char *tok, stack_t **stack, unsigned int ln)
  */
 int main(int argc, char **argv)
 {
+	glob->file = NULL;
+	glob->tok = NULL;
 	stack_t *stack = NULL;
 	char *line_buff = NULL;
 	size_t buff_size = 0;

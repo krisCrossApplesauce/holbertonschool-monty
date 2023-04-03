@@ -18,22 +18,22 @@ void push(stack_t **stack, unsigned int line_number)
 		fprintf(stderr, "Error: malloc failed\n");
 		free(stack);
 		free(new);
-		fclose(file);
+		fclose(glob->file);
 		return (EXIT_FAILURE);
 	}
 
-	tok = strtok(NULL, " \t\n");
+	glob->tok = strtok(NULL, " \t\n");
 
-	if (!tok || !(n = atoi(tok)))
+	if (!glob->tok || !(n = atoi(tok)))
 	{
 		fprintf(stderr, "L%s: usage: push integer", line_number);
 		free(stack);
 		free(new);
-		fclose(file);
+		fclose(glob->file);
 		return (EXIT_FAILURE);
 	}
 
-	new->n = tok;
+	new->n = glob->tok;
 	new->prev = NULL;
 	new->next = (*stack);
 
