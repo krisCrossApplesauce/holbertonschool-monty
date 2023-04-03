@@ -53,7 +53,7 @@ typedef struct globe_s
 } globe_t;
 
 
-void check_op(char *tok, stack_t **stack, unsigned int ln);
+void check_op(stack_t **stack, unsigned int ln);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 

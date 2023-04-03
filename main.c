@@ -6,13 +6,12 @@ globe_t glob;
  * check_op - runs the function that corresponds with the command
  * specified in the current line of the given file
  *
- * @tok: contents of the current line in the given file
  * @stack: doubly linked list, the stack used by the commands
  * @ln: unsigned int, line number
  *
  * Return: void
  */
-void check_op(char *tok, stack_t **stack, unsigned int ln)
+void check_op(stack_t **stack, unsigned int ln)
 {
 	int i = 0;
 	instruction_t stuff[] = {
@@ -22,15 +21,15 @@ void check_op(char *tok, stack_t **stack, unsigned int ln)
 
 	while (i < 2)
 	{
-		if (*stuff[i].opcode == tok)
+		if (*stuff[i].opcode == glob->tok)
 		{ return (stuff[i].f(stack, ln)); }
 
 		i++;
 	}
 
-	fprintf(stderr, "L%d: unknown instruction %s\n", ln, tok);
+	fprintf(stderr, "L%d: unknown instruction %s\n", ln, glob->tok);
 	free(stack);
-	fclose(file);
+	fclose(glob->file);
 	exit(EXIT_FAILURE);
 }
 
@@ -58,24 +57,23 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 
-	file = fopen(argv[1], "r");
+	glob->file = fopen(argv[1], "r");
 
-	if (!file_contents)
+	if (!glob->file)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
-	while (getline(&line_buff, &buff_size, file) != EOF)
+	while (getline(&line_buff, &buff_size, glob->file) != EOF)
 	{
-		tok = strtok(line_buff, " \t\n");
+		glob->tok = strtok(line_buff, " \t\n");
 		free(line_buff);
 		line_buff = NULL;
-		check_op(&tok, &stack, line_num);
+		check_op(&stack, line_num);
 	}
 
 	free(line_buff);
-	fclose(file);
-	free_stack(&stack);
+	fclose(glob->file);
 	return (EXIT_SUCCESS);
 }
