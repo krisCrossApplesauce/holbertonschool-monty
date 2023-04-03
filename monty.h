@@ -48,10 +48,11 @@ typedef struct instruction_s
  */
 typedef struct globe_s
 {
-	FILE file;
+	FILE *file;
 	char *tok;
 } globe_t;
 
+extern globe_t glob;
 
 void check_op(stack_t **stack, unsigned int ln);
 void push(stack_t **stack, unsigned int line_number);
