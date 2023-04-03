@@ -31,11 +31,16 @@ void check_op(stack_t **stack, unsigned int ln)
 	}
 
 	fprintf(stderr, "L%d: unknown instruction %s\n", ln, glob.tok);
-	free_stack(stack);
-	fclose(glob.file);
-	glob.file = NULL;
-	free(glob.tok);
-	glob.tok = NULL;
+/**
+ * if (stack)
+ * { free_stack(stack); }
+ *
+ * fclose(glob.file);
+ * glob.file = NULL;
+ * free(glob.tok);
+ * glob.tok = NULL;
+ */
+
 	exit(EXIT_FAILURE);
 }
 
@@ -83,11 +88,15 @@ int main(int argc, char **argv)
 	}
 
 	free(line_buff);
-	free_stack(&stack);
+
+	if (stack)
+	{ free_stack(&stack); }
+
 	fclose(glob.file);
 	glob.file = NULL;
 	free(glob.tok);
 	glob.tok = NULL;
+
 	return (EXIT_SUCCESS);
 }
 
