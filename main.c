@@ -31,8 +31,11 @@ void check_op(stack_t **stack, unsigned int ln)
 	}
 
 	fprintf(stderr, "L%d: unknown instruction %s\n", ln, glob.tok);
-	free(stack);
+	free_stack(stack);
 	fclose(glob.file);
+	glob.file = NULL;
+	free(glob.tok);
+	glob.tok = NULL;
 	exit(EXIT_FAILURE);
 }
 
@@ -66,6 +69,8 @@ int main(int argc, char **argv)
 	if (!glob.file)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		fclose(glob.file);
+		glob.file = NULL;
 		exit(EXIT_FAILURE);
 	}
 
@@ -78,6 +83,33 @@ int main(int argc, char **argv)
 	}
 
 	free(line_buff);
+	free_stack(&stack);
 	fclose(glob.file);
+	glob.file = NULL;
+	free(glob.tok);
+	glob.tok = NULL;
 	return (EXIT_SUCCESS);
+}
+
+
+/**
+ * free_stack - frees a stack
+ *
+ * @stack: the stack to be freed
+ *
+ * Return: void
+ */
+void free_stack(stack_t **stack)
+{
+	stack_t *node;
+
+	while (*stack != NULL)
+	{
+		node = *stack;
+		*stack = (*stack)->next;
+
+		free(node);
+	}
+
+	free(*stack);
 }

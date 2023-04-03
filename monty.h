@@ -55,6 +55,7 @@ typedef struct globe_s
 extern globe_t glob;
 
 void check_op(stack_t **stack, unsigned int ln);
+void free_stack(stack_t **stack);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 
