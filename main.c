@@ -13,34 +13,23 @@ globe_t glob;
  */
 void check_op(stack_t **stack, unsigned int ln)
 {
-	int i = 0;
+	int i;
 	instruction_t stuff[] = {
-		{ "push", push },
-		{ "pall", pall }
+		{"push", push},
+		{"pall", pall}
 	};
 
-	while (i < 2)
+	for (i = 0; stuff[i].opcode; i++)
 	{
-		if (stuff[i].opcode == glob.tok)
+		if (strcmp(stuff[i].opcode, glob.tok) == 0)
 		{
 			stuff[i].f(stack, ln);
 			return;
 		}
-
-		i++;
 	}
 
 	fprintf(stderr, "L%d: unknown instruction %s\n", ln, glob.tok);
-/**
- * if (stack)
- * { free_stack(stack); }
- *
- * fclose(glob.file);
- * glob.file = NULL;
- * free(glob.tok);
- * glob.tok = NULL;
- */
-
+	fclose(glob.file);
 	exit(EXIT_FAILURE);
 }
 
@@ -74,28 +63,21 @@ int main(int argc, char **argv)
 	if (!glob.file)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
-		fclose(glob.file);
-		glob.file = NULL;
 		exit(EXIT_FAILURE);
 	}
 
 	while (getline(&line_buff, &buff_size, glob.file) != EOF)
 	{
 		glob.tok = strtok(line_buff, " \t\n");
+		check_op(&stack, line_num);
 		free(line_buff);
 		line_buff = NULL;
-		check_op(&stack, line_num);
 	}
-
-	free(line_buff);
 
 	if (stack)
 	{ free_stack(&stack); }
 
 	fclose(glob.file);
-	glob.file = NULL;
-	free(glob.tok);
-	glob.tok = NULL;
 
 	return (EXIT_SUCCESS);
 }

@@ -16,16 +16,8 @@ void push(stack_t **stack, unsigned int line_number)
 	if (!new)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-
-		if (stack)
-		{ free_stack(stack); }
-
-		free(new);
+		free(stack);
 		fclose(glob.file);
-		glob.file = NULL;
-		free(glob.tok);
-		glob.tok = NULL;
-
 		exit(EXIT_FAILURE);
 	}
 
@@ -34,16 +26,8 @@ void push(stack_t **stack, unsigned int line_number)
 	if (!glob.tok)
 	{
 		fprintf(stderr, "L%u: usage: push integer", line_number);
-
-		if (stack)
-		{ free_stack(stack); }
-
 		free(new);
 		fclose(glob.file);
-		glob.file = NULL;
-		free(glob.tok);
-		glob.tok = NULL;
-
 		exit(EXIT_FAILURE);
 	}
 
